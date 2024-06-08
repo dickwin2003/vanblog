@@ -23,7 +23,7 @@ services:
       - vanblog_https_port:443
   mongo:
     # 某些机器不支持 avx 会报错，所以默认用 v4 版本。有的话用最新的。
-    image: mongo:5.0.27
+    image: mongo:latest
     restart: always
     environment:
       TZ: 'Asia/Shanghai'
