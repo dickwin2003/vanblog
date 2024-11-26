@@ -17,7 +17,12 @@ export default function (props: { name?: string }) {
           className="flex flex-col items-center justify-center select-none"
           style={{ transform: "translateY(-30%)" }}
         >
-          <Image alt="logo" src="/logo.svg" width={200} height={200} />
+          <Image
+            alt="logo"
+            src="/logo.svg"
+            width={200}
+            height={200}
+          />
           <div className="mt-4 text-gray-600 font-base text-xl dark:text-dark">
             {`此${props?.name ? props.name : "页面"}不存在`}
           </div>

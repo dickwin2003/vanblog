@@ -1,7 +1,13 @@
-import { slide as Menu } from "react-burger-menu";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback } from "react";
 import { MenuItem } from "../../api/getAllData";
+
+// 动态导入Menu组件，禁用SSR
+const Menu = dynamic(() => import("react-burger-menu").then(mod => mod.slide), {
+  ssr: false
+});
+
 export default function (props: {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
@@ -40,6 +46,7 @@ export default function (props: {
       );
     }
   }, []);
+
   const renderLinks = useCallback(() => {
     const arr: any[] = [];
     props.menus.forEach((item) => {
@@ -51,7 +58,8 @@ export default function (props: {
       }
     });
     return arr;
-  }, [props]);
+  }, [props, renderItem]);
+
   return (
     <>
       <div>
@@ -63,12 +71,10 @@ export default function (props: {
           isOpen={props.isOpen}
           onStateChange={(state) => {
             if (state.isOpen) {
-              // 要打开
               document.body.style.overflow = "hidden";
             } else {
               document.body.style.overflow = "auto";
             }
-
             props.setIsOpen(state.isOpen);
           }}
         >
@@ -77,7 +83,7 @@ export default function (props: {
               document.body.style.overflow = "auto";
               props.setIsOpen(false);
             }}
-            className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark "
+            className="sm:flex h-full items-center text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark"
           >
             {renderLinks()}
             {props.showAdminButton == "true" && (
@@ -86,7 +92,7 @@ export default function (props: {
                 key={"rss-phone-nav-btn"}
               >
                 <a
-                  className="w-full inline-block px-4 "
+                  className="w-full inline-block px-4"
                   target="_blank"
                   href={"/admin"}
                 >
